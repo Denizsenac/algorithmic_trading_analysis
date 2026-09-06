@@ -7,7 +7,9 @@ class NewsFetcher:
         self.ticker = yf.Ticker(self.ticker_symbol)
 
     def fetch_news(self):
-        print(f"[{self.ticker_symbol}] fetching news and market sentiment...\n")
+        print(f"[{self.ticker_symbol}] haberler çekiliyor...\n")
+        
+        # yfinance üzerinden hisseye ait haberleri çekiyoruz
         raw_news = self.ticker.news
         
         parsed_news = []
