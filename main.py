@@ -4,7 +4,7 @@ kardemir=MarketDataFetcher("KARCL.IS")
 apple=MarketDataFetcher("AAPL")
 
 kardemir_data=kardemir.fetch_data()
-apple_data = apple.fetch_data(interval="5d")
+apple_data = apple.fetch_data(period="5d")
 
 print(kardemir_data.head())
 print(apple_data.head())
