@@ -1,23 +1,21 @@
 from data_fetcher import MarketDataFetcher
 from news_fetcher import NewsFetcher
+from data_processor import DataProcessor
 
+target_ticker = "AAPL"
 
+# 1. Fetch Price Data
+market = MarketDataFetcher(target_ticker)
+price_df = market.fetch_data(period="1mo")
 
-kardemir=MarketDataFetcher("KARCL.IS")
-apple=MarketDataFetcher("AAPL")
+# 2. Fetch News Data
+news = NewsFetcher(target_ticker)
+news_df = news.fetch_news()
 
-kardemir_data=kardemir.fetch_data()
-apple_data = apple.fetch_data(period="5d")
+# 3. Merge Both Datasets
+processor = DataProcessor(price_data=price_df, news_data=news_df)
+final_dataset = processor.merge_data()
 
-print(kardemir_data.head())
-print(apple_data.head())
-
-apple_news = NewsFetcher("AAPL")
-
-news_data = apple_news.fetch_news()
-
-print("--- LATEST NEWS AND MARKET SENTIMENT ---")
-if not news_data.empty:
-    print(news_data[['Date', 'Publisher', 'Title']].head())
-else:
-    print("No recent news found.")
+# Print the final result
+print(f"--- FINAL MERGED DATASET FOR {target_ticker} ---")
+print(final_dataset[['Close', 'Title']].tail(10))
