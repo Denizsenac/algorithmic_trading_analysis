@@ -27,7 +27,7 @@ if target_ticker:
     print(f"--- FINAL MERGED DATASET FOR {target_ticker} ---")
     print(final_dataset[['Close', 'Sentiment_Score', 'Title']].tail(10))
 else:
-    print("İşlem iptal edildi.")
+    print("İşlem iptal edildi")
 
 # 1. Fetch Price Data
 market = MarketDataFetcher(target_ticker)
@@ -46,7 +46,7 @@ print("\n--- ÇEKİLEN HAM HABERLER ---")
 if not news_df.empty and 'Date' in news_df.columns:
     print(news_df[['Date', 'Title', 'Publisher']])
 else:
-    print("Yahoo Finance bu hisse için şu an hiçbir haber döndürmedi (Liste boş).")
+    print("No news returned")
 
 # 3. Merge Both Datasets
 processor = DataProcessor(price_data=price_df, news_data=news_df)
