@@ -27,15 +27,15 @@ class NewsFetcher:
             print("Uyarı: Canlı haber çekilemedi. Strateji testi için örnek veriler kullanılıyor...")
             today = datetime.datetime.today()
             parsed_news = [
-                # Çok Olumlu Haber
+                # Çok Olumlu Haber (3 gün önce - Cuma)
                 {"Title": f"{self.ticker_symbol} reports record breaking earnings and positive outlook", 
-                 "Publisher": "TestNews", "Date": today - datetime.timedelta(days=1), "Link": ""},
-                # Olumsuz Haber
+                 "Publisher": "TestNews", "Date": today - datetime.timedelta(days=3), "Link": ""},
+                # Olumsuz Haber (4 gün önce - Perşembe)
                 {"Title": f"Investors are worried about {self.ticker_symbol}'s recent supply chain issues and delays", 
-                 "Publisher": "TestNews", "Date": today - datetime.timedelta(days=2), "Link": ""},
-                # Nötr/Hafif Olumlu Haber
+                 "Publisher": "TestNews", "Date": today - datetime.timedelta(days=4), "Link": ""},
+                # Nötr/Hafif Olumlu Haber (5 gün önce - Çarşamba)
                 {"Title": f"{self.ticker_symbol} announces steady growth in quarterly review", 
-                 "Publisher": "TestNews", "Date": today - datetime.timedelta(days=3), "Link": ""}
+                 "Publisher": "TestNews", "Date": today - datetime.timedelta(days=5), "Link": ""}
             ]
             
         news_df = pd.DataFrame(parsed_news)
