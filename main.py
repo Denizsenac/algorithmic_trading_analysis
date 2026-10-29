@@ -6,6 +6,8 @@ from ticker_search import TickerSearch
 # --- main.py DOSYANIN EN ALTINA EKLENECEK KISIM ---
 from strategy_engine import StrategyEngine
 
+# --- main.py DOSYANIN EN ALTINA EKLENECEK KISIM ---
+from Backtester import Backtester
 
 
 # Kullanıcıya sorma ve arama kısmı
@@ -69,3 +71,18 @@ strategy_results = engine.generate_signals()
 # Sonuçları daha okunaklı görebilmek için sadece aksiyon, fiyat ve duygu skorunu yazdırıyoruz
 print(f"\n--- STRATEGY RESULTS FOR {target_ticker} ---")
 print(strategy_results[['Close', 'RSI_14', 'Sentiment_Score', 'Action']].tail(15))
+
+# 5. Run Historical Simulation (Backtesting)
+simulator = Backtester(strategy_results, initial_balance=10000.0)
+final_value, roi = simulator.run_simulation()
+
+user_budget = 10000.0  
+
+# 5. Run Historical Simulation (Backtesting)
+simulator = Backtester(strategy_results, initial_balance=user_budget)
+final_value, roi = simulator.run_simulation()
+
+print(f"--- BACKTEST RESULTS FOR {target_ticker} ---")
+print(f"Initial Investment : ${user_budget:,.2f}") 
+print(f"Final Portfolio    : ${final_value:,.2f}")
+print(f"Net Profit / Loss  : {roi:.2f}%")
