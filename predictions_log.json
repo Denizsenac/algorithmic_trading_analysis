@@ -1,0 +1,30 @@
+[
+    {
+        "Ticker": "AAPL",
+        "Prediction_Date": "2026-10-31",
+        "Target_Date": "Monday (Post-Weekend)",
+        "Predicted_Close": 343.17677405595856,
+        "Actual_Close_Today": 344.6300048828125
+    },
+    {
+        "Ticker": "AAPL",
+        "Prediction_Date": "2026-10-31",
+        "Target_Date": "Monday (Post-Weekend)",
+        "Predicted_Close": 343.17677405595856,
+        "Actual_Close_Today": 344.6300048828125
+    },
+    {
+        "Ticker": "AAPL",
+        "Prediction_Date": "2026-11-01",
+        "Target_Date": "2026-11-02",
+        "Predicted_Close": 343.5832892490133,
+        "Actual_Close_Today": 344.6300048828125
+    },
+    {
+        "Ticker": "AAPL",
+        "Prediction_Date": "2026-11-01",
+        "Target_Date": "2026-11-02",
+        "Predicted_Close": 343.5832892557751,
+        "Actual_Close_Today": 344.6300048828125
+    }
+]

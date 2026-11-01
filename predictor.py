@@ -59,3 +59,49 @@ class PricePredictor:
         with open(filename, 'w') as f:
             json.dump(data, f, indent=4)
         print(f"[{ticker}] Prediction saved to {filename}")
+
+    def evaluate_past_predictions(self, ticker, actual_price_today):
+        filename = "predictions_log.json"
+        
+        # Log dosyası yoksa veya boşsa hiç işlem yapma
+        if not os.path.exists(filename):
+            print(f"[{ticker}] için geçmiş tahmin kaydı bulunamadı.\n")
+            return
+            
+        with open(filename, 'r') as f:
+            try:
+                data = json.load(f)
+            except json.JSONDecodeError:
+                data = []
+
+        # Bugünkü tarihi buluyoruz (Örn: "2026-11-02")
+        today_str = datetime.today().strftime('%Y-%m-%d')
+        
+        found_past_prediction = False
+        
+        print(f"\n--- GEÇMİŞ TAHMİN KONTROLÜ ({ticker}) ---")
+        for log in data:
+            # Eğer geçmişte, hedef tarihi (Target_Date) "Bugün" olan bir tahmin yapılmışsa
+            if log.get("Ticker") == ticker and log.get("Target_Date") == today_str:
+                found_past_prediction = True
+                past_pred_price = log.get("Predicted_Close")
+                
+                # Hata Payını (Error Margin) hesaplıyoruz
+                error_margin = abs(past_pred_price - actual_price_today)
+                error_percentage = (error_margin / actual_price_today) * 100
+                
+                print(f"Hedeflenen Tarih     : {today_str}")
+                print(f"Geçmişteki Tahmin    : ${past_pred_price:,.2f}")
+                print(f"Bugünkü Gerçek Fiyat : ${actual_price_today:,.2f}")
+                
+                # Sapma oranına göre başarılı/başarısız durumu
+                if error_percentage <= 1.0:
+                    print(f"Sonuç                : ✅ ÇOK BAŞARILI (Sapma: Sadece %{error_percentage:.2f})")
+                elif error_percentage <= 3.0:
+                    print(f"Sonuç                : ⚠️ KABUL EDİLEBİLİR (Sapma: %{error_percentage:.2f})")
+                else:
+                    print(f"Sonuç                : ❌ YANILGI BÜYÜK (Sapma: %{error_percentage:.2f})")
+                print("-" * 40)
+                
+        if not found_past_prediction:
+            print(f"Bugünün tarihine ({today_str}) ait geçmiş bir tahmin kaydı bulunamadı.")
