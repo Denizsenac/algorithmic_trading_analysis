@@ -1,3 +1,7 @@
 venv/
 .env
 __pycache__/
+*.pyc
+predictions_log.json
+predictions_log.json.bak
+predictions_log.json.tmp
