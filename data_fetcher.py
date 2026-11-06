@@ -1,6 +1,7 @@
-import yfinance as yf
-import pandas as pd
 import asyncio
+
+import yfinance as yf
+
 
 class MarketDataFetcher:
     def __init__(self, ticker_symbol):
@@ -13,6 +14,7 @@ class MarketDataFetcher:
 
     async def fetch_data(self, period="1mo"):
         print(f"[{self.ticker_symbol}] ({self.market}) borsa verisi çekiliyor...\n")
-        loop = asyncio.get_event_loop()
-        historical_data = await loop.run_in_executor(None, self.ticker.history, period)
+        # history() senkron (bloklayıcı) bir çağrı; ayrı thread'de çalıştırarak
+        # event loop'u bloklamıyoruz. (to_thread, get_running_loop kullanır.)
+        historical_data = await asyncio.to_thread(self.ticker.history, period=period)
         return historical_data
