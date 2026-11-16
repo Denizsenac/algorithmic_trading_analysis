@@ -16,7 +16,7 @@ class MarketVisualizer:
             name='Market Price'
         ))
         
-        # 2. 20 Günlük Hareketli Ortalamayı (SMA) Ekliyoruz
+        # 2. Hareketli Ortalamaları Ekliyoruz
         if 'SMA_20' in df.columns:
             self.fig.add_trace(go.Scatter(
                 x=df.index, 
@@ -24,6 +24,21 @@ class MarketVisualizer:
                 line=dict(color='blue', width=1.5), 
                 name='SMA 20'
             ))
+        if 'EMA_9' in df.columns:
+            self.fig.add_trace(go.Scatter(
+                x=df.index, 
+                y=df['EMA_9'], 
+                line=dict(color='orange', width=1.2), 
+                name='EMA 9'
+            ))
+        if 'EMA_21' in df.columns:
+            self.fig.add_trace(go.Scatter(
+                x=df.index, 
+                y=df['EMA_21'], 
+                line=dict(color='cyan', width=1.2), 
+                name='EMA 21'
+            ))
+
 
     def add_trading_signals(self, df):
         # 3. StrategyEngine'in ürettiği AL (BUY) ve SAT (SELL) Sinyallerini Ekliyoruz
