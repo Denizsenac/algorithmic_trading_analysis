@@ -1,4 +1,4 @@
-# 🚀 QuantAI: Algoritmik Ticaret & Yapay Zeka Destekli Piyasa Analiz Platformu
+# 🚀 QuantAI: Algorithmic Trading & AI Market Intelligence Platform
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.11%20%7C%203.12%20%7C%203.14-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python Version" />
@@ -10,100 +10,107 @@
 </p>
 
 <p align="center">
-  <b>Borsa İstanbul (BIST)</b> ve <b>Global Piyasalarda (ABD, Kripto)</b> teknik analiz göstergelerini, gerçek zamanlı haber duyarlılık analizini (NLP) ve durağan getiri odaklı makine öğrenmesini birleştiren yeni nesil kantitatif terminal.
+  <b>A next-generation quantitative trading and financial analysis terminal</b> designed for <b>Borsa Istanbul (BIST)</b> and <b>Global Markets (US Equities, Tech, Crypto)</b>. It harmonizes multi-timeframe technical momentum indicators, real-time news sentiment NLP, and stationary-return machine learning into a unified decision matrix.
 </p>
 
 ---
 
-## 📌 İçindekiler
-- [Genel Bakış](#-genel-bakış)
-- [Öne Çıkan Özellikler](#-öne-çıkan-özellikler)
-- [Matematiksel ve Finansal Mimari](#-matematiksel-ve-finansal-mimari)
-- [Proje Mimarisi ve Dosya Yapısı](#-proje-mimarisi-ve-dosya-yapısı)
-- [Ekran Görüntüleri ve Arayüz](#-ekran-görüntüleri-ve-arayüz)
-- [Kurulum ve Hızlı Başlangıç](#-kurulum-ve-hızlı-başlangıç)
-- [Test Paketinin Çalıştırılması](#-test-paketinin-çalıştırılması)
-- [Yol Haritası (Roadmap)](#-yol-haritası-roadmap)
-- [Yasal Uyarı (SPK & Mevzuat)](#-yasal-uyarı-spk--mevzuat)
+## 📌 Table of Contents
+- [Overview](#-overview)
+- [Key Features](#-key-features)
+- [Quantitative & Mathematical Architecture](#-quantitative--mathematical-architecture)
+- [Project Architecture & Directory Structure](#-project-architecture--directory-structure)
+- [Installation & Quickstart](#-installation--quickstart)
+- [Running Offline Unit Tests](#-running-offline-unit-tests)
+- [Development Roadmap](#-development-roadmap)
+- [Legal & Regulatory Disclaimer](#-legal--regulatory-disclaimer)
+- [Author & Contribution](#-author--contribution)
 
 ---
 
-## 💡 Genel Bakış
+## 💡 Overview
 
-Finansal piyasalarda tek başına teknik göstergeler piyasa gürültüsüne (whipsaw) yakalanırken, yalnızca haber takibi yapmak ise fiyatlama zamanlamasını kaçırmaya yol açar. **QuantAI**, bu iki dünyayı hibrit bir karar matrisiyle birleştirir:
+In modern algorithmic trading, relying exclusively on technical indicators leads to severe whipsaws during market regime shifts, while relying solely on news headlines results in delayed trade execution.
 
-1. **Hisse Fiyat Verileri:** Yahoo Finance üzerinden asenkron veri boru hattı ile çekilir.
-2. **Finansal Haber Akışı:** Yahoo Finance ve kesintilere karşı otomatik devreye giren **Google News RSS Fallback** motoru ile anlık taranır.
-3. **Hibrit Karar Mekanizması:** Çift teyitli trend analizi (EMA 9/21 + SMA 20) ve Wilder's RSI ile VADER haber duyarlılık puanları filtrelenerek alım-satım sinyalleri üretilir.
-4. **Dinamik Risk Yönetimi:** Sermayeyi korumak ve kârı kilitlemek için volatiliteye duyarlı **ATR Tabanlı Trailing Stop** çalışır.
-5. **Yapay Zeka & Tahmin Motoru:** Fiyatın rastgele yürüyüş (random walk) yanılgısını kıran, durağan yüzdesel getiri tahmini yapan Ridge regresyon mimarisi.
-
----
-
-## ⚡ Öne Çıkan Özellikler
-
-- **🌐 Evrensel Hisse Arama Motoru:** Şirket adı (örn. `Türk Hava Yolları`, `Apple`) veya sembol (`THYAO.IS`, `AAPL`, `NVDA`) ile akıllı otomatik tamamlama.
-- **🎨 Katmanlı Modern Web Arayüzü (Streamlit):**
-  - **Katman 1 (Gateway & Onboarding):** Yasal bilgilendirme, modül özetleri ve tek tıkla başlatma.
-  - **Katman 2 (Arama Paneli):** Popüler BIST ve Global hisseler için hızlı seçim butonları.
-  - **Katman 3 (Canlı Terminal):** Plotly interaktif mum grafikleri, göstergeler, sinyaller, backtest simülasyonu, ML katsayıları ve duyarlılık rozetleri.
-- **🛡️ Sentiment Guard Teknolojisi:** Haber verisi yetersiz olduğunda modelin negatif ya da yanıltıcı ağırlık atamasını engelleyen koruyucu algoritma.
-- **⚡ Kesintisiz Google News Fallback:** Yahoo Finance haber API'si kısıtlandığında doğrudan Google News RSS beslemesine geçerek veri akışını kesintisiz sürdürür.
-- **🧪 0.1 Saniyede Koşan Çevrimdışı CI Test Paketi:** Harici ağ bağımlılığı olmadan GitHub Actions üzerinde doğrulanan test mimarisi.
+**QuantAI** solves this challenge through an asynchronous hybrid pipeline:
+1. **Market Data Pipeline:** Asynchronously streams historical OHLCV data via Yahoo Finance.
+2. **Real-Time News NLP Stream:** Scrapes live headlines using Yahoo Finance and an automated **Google News RSS Fallback** engine when primary APIs face rate-limits or geographic bans.
+3. **Hybrid Decision Engine:** Combines dual-trend confirmation (EMA 9/21 cross + SMA 20 filter) and Wilder's Smoothed RSI (14) with VADER sentiment scores to generate high-probability BUY/SELL signals.
+4. **Dynamic Risk Control:** Mitigates drawdowns and locks in floating profits using a volatility-adaptive **ATR Trailing Stop** (`atr_multiplier=2.5`).
+5. **Stationary AI Predictor:** Avoids spurious random-walk correlations by predicting **percentage returns** rather than raw price levels.
 
 ---
 
-## 📐 Matematiksel ve Finansal Mimari
+## ⚡ Key Features
 
-### 1. Durağan Getiri Modellemesi (Stationary Returns)
-Klasik modellerde ham `Close` fiyatını tahmin etmek sahte korelasyona (spurious correlation) ve $\approx 0.99$ sahte $R^2$ yanılsamasına yol açar. QuantAI, seriyi durağanlaştırarak bir sonraki günün **yüzdesel getirisini** ($\text{Target\_Next\_Return}$) hedefler:
-
-$$\text{Return}_{t+1} = \frac{\text{Close}_{t+1} - \text{Close}_t}{\text{Close}_t}$$
-
-### 2. Wilder's Smoothed RSI (14)
-Standart SMA bazlı RSI yerine finansal standart olan Wilder'ın üssel yumuşatma yöntemi uygulanır.
-
-### 3. Dinamik ATR Trailing Stop
-Sabit yüzdeli stop-loss yerine piyasa oynaklığını (ATR) izleyen dinamik takip eden zarar durdurma mekanizması:
-
-$$\text{Stop Fiyatı} = \text{Zirve Fiyat} - (\text{ATR}_{14} \times \text{Çarpan})$$
+- **🌐 Universal Ticker Resolution:** Smart fuzzy search supporting company names (e.g., `Turkish Airlines`, `Apple`, `NVIDIA`) and ticker symbols (`THYAO.IS`, `AAPL`, `NVDA`, `TSLA`).
+- **🎨 Layered Modern Fintech UI (Streamlit & Plotly):**
+  - **Layer 1 (Gateway & Onboarding):** High-contrast regulatory disclaimer, module previews, and instant access.
+  - **Layer 2 (Search & Launchpad):** Clean search interface with one-click popular BIST 30 and US tech chip shortcuts. No unwanted automatic requests.
+  - **Layer 3 (Live Terminal):** Interactive Plotly candlestick charts with volume bars, technical overlays, trade markers, backtest performance KPIs, and feature-weight transparency.
+- **🛡️ Sentiment Guard Algorithm:** Automatically regularizes NLP sentiment coefficients to `0.0` when news data is sparse, preventing spurious overfitting on zero-sentiment historical windows.
+- **⚡ Resilient Google News RSS Fallback:** Zero-configuration, zero-API-key fallback ensuring uninterrupted sentiment analysis even when third-party services are throttled.
+- **🧪 Ultra-Fast Offline CI Test Suite:** A comprehensive test suite running in **<0.12 seconds** without network dependencies, verifying models and backtests in GitHub Actions CI across Python 3.11 and 3.12.
 
 ---
 
-## 📂 Proje Mimarisi ve Dosya Yapısı
+## 📐 Quantitative & Mathematical Architecture
 
-```bash
+### 1. Stationary Percentage Return Formulation
+Regressing raw non-stationary price series ($Close_t$) against lagged indicators creates spurious correlation and a misleading $R^2 \approx 0.99$ illusion with random directional hit rates (~44%). QuantAI enforces strict statistical stationarity by modeling next-day percentage returns:
+
+$$\text{Target\_Next\_Return}_{t} = \frac{\text{Close}_{t+1} - \text{Close}_t}{\text{Close}_t}$$
+
+### 2. Wilder's Smoothed RSI (14-Period)
+QuantAI implements Welles Wilder's original exponential smoothing for Average Gain and Average Loss, eliminating the distortion caused by standard simple moving average implementations:
+
+$$\text{Smoothed Gain}_t = \frac{\text{Smoothed Gain}_{t-1} \times 13 + \text{Gain}_t}{14}$$
+
+$$\text{RSI} = 100 - \left( \frac{100}{1 + \frac{\text{Smoothed Gain}}{\text{Smoothed Loss}}} \right)$$
+
+### 3. Volatility-Adaptive Dynamic ATR Trailing Stop
+Rather than using static percentage stops that trigger prematurely during volatile market swings, QuantAI recalculates stop thresholds dynamically based on the 14-day True Range:
+
+$$\text{Stop Level}_t = \max(\text{Stop Level}_{t-1}, \; \text{Peak Price} - [\text{ATR}_{14} \times \alpha])$$
+
+*(where $\alpha$ is the user-configured ATR multiplier, defaulting to $2.5$)*.
+
+---
+
+## 📂 Project Architecture & Directory Structure
+
+```text
 algorithmic_trading_analysis/
-├── app.py                 # Streamlit web arayüzü ve interaktif terminal
-├── main.py                # Konsol tabanlı tam analiz çalıştırıcısı
-├── Backtester.py          # ATR Trailing Stop destekli simülasyon ve getiri motoru
-├── strategy_engine.py     # Hibrit alım-satım sinyal üretim algoritması
-├── predictor.py           # Durağan getiri odaklı makine öğrenmesi tahmin modeli
-├── data_processor.py      # Teknik indikatörler, veri birleştirme ve özellik mühendisliği
-├── data_fetcher.py        # Asenkron Yahoo Finance piyasa verisi çekicisi
-├── news_fetcher.py        # Yahoo Finance + Google News RSS hibrit haber motoru
-├── ticker_search.py       # Akıllı hisse senedi ve şirket adı arama motoru
-├── visualizer.py          # Plotly interaktif grafik üreticisi (HTML dışa aktarım)
-├── test_project.py        # Çevrimdışı çalışan otomatik birim test paketi
-├── requirements.txt       # Proje bağımlılıkları
-└── .github/workflows/     # GitHub Actions sürekli entegrasyon (CI) yapılandırması
+├── app.py                 # Interactive Streamlit terminal & visualization dashboard
+├── main.py                # Command-line interface for headless quantitative execution
+├── Backtester.py          # Trade simulator with ATR Trailing Stop, Win Rate, and Max Drawdown
+├── strategy_engine.py     # Hybrid signal generator (Dual-EMA, SMA20, RSI, Sentiment)
+├── predictor.py           # Machine learning return engine with Sentiment Guard & Ridge regression
+├── data_processor.py      # Technical indicator calculation, feature engineering & data alignment
+├── data_fetcher.py        # Asynchronous market data fetcher with SSL self-healing
+├── news_fetcher.py        # Dual-engine financial news scraper (Yahoo Finance + Google News RSS)
+├── ticker_search.py       # Exact and fuzzy symbol resolver with offline fallback
+├── visualizer.py          # Plotly interactive candlestick chart builder (HTML export)
+├── test_project.py        # Mocked, network-independent offline test suite (runs in 0.1s)
+├── requirements.txt       # Environment dependencies with flexible version ranges
+└── .github/workflows/     # Automated GitHub Actions CI workflow
 ```
 
 ---
 
-## 🚀 Kurulum ve Hızlı Başlangıç
+## 🚀 Installation & Quickstart
 
-### Gereksinimler
-- Python 3.11 veya üzeri
+### Prerequisites
+- Python 3.11, 3.12, or 3.14
 - Git
 
-### 1. Depoyu Klonlayın
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/Denizsenac/algorithmic_trading_analysis.git
 cd algorithmic_trading_analysis
 ```
 
-### 2. Sanal Ortam (Virtualenv) Oluşturun ve Aktif Edin
+### 2. Set Up a Virtual Environment
 ```bash
 # Windows
 python -m venv venv
@@ -114,53 +121,54 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-### 3. Bağımlılıkları Yükleyin
+### 3. Install Dependencies
 ```bash
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### 4. Web Terminalini Başlatın (Streamlit)
+### 4. Launch the Web Trading Terminal (Streamlit)
 ```bash
 streamlit run app.py
 ```
-Tarayıcınızda otomatik olarak **`http://localhost:8501`** açılacaktır.
+Your browser will automatically open **`http://localhost:8501`**.
 
-### 5. Konsol Modunda Çalıştırma (Opsiyonel)
+### 5. Run in Console Mode (Optional)
 ```bash
 python main.py
 ```
 
 ---
 
-## 🧪 Test Paketinin Çalıştırılması
+## 🧪 Running Offline Unit Tests
 
-Projede harici internet bağlantısına ihtiyaç duymadan algoritmaları, sinyalleri, backtest hesaplamalarını ve duyarlılık filtrelerini doğrulayan bir test paketi yer alır:
+The repository includes a dedicated unit test suite that validates feature calculation, signal generation, backtesting execution, and machine learning convergence without calling external APIs:
 
 ```bash
 python test_project.py
 ```
-*Tüm testler ortalama **0.1 saniye** içinde tamamlanır ve yeşil döner.*
+*Expected execution time: **~0.10s** (All tests green).*
 
 ---
 
-## 🗺️ Yol Haritası (Roadmap)
+## 🗺️ Development Roadmap
 
-- [x] **Adım 1:** Streamlit ile modern, katmanlı ve interaktif web arayüzü tasarımı.
-- [ ] **Adım 2:** `predictor.py` içerisine **XGBoost (Extreme Gradient Boosting)** entegrasyonu ile yön isabet oranının (Hit Rate) maksimize edilmesi ve özellik önem derecesi (Feature Importance) analizi.
-- [ ] **Adım 3:** Sözlük tabanlı VADER duyarlılığı yerine **Vektör Veritabanı + LLM (RAG)** mimarisiyle finansal haberlerin derin anlamsal etkisinin ölçülmesi.
-- [ ] **Adım 4:** Streamlit Cloud / Railway üzerinde canlı dağıtım ve webhook ile anlık Telegram sinyal bildirimleri.
+- [x] **Step 1: Web Interface & Dashboard (Streamlit):** Multi-layered fintech UI, dynamic Plotly charts, customizable risk parameters, and SPK-compliant disclaimer. *(Completed)*
+- [ ] **Step 2: Advanced ML Engine (XGBoost):** Upgrade linear/ridge estimators to gradient-boosted trees (`XGBRegressor`) with hyperparameter tuning, feature importance breakdown, and directional hit-rate optimization. *(In Progress)*
+- [ ] **Step 3: Neural Sentiment & RAG (LLM):** Replace lexicon-based VADER scoring with a local vector database and Large Language Model (RAG) assessing nuanced geopolitical and market impact.
+- [ ] **Step 4: Cloud Deployment & Alerts:** One-click deployment to Streamlit Community Cloud / Railway and instant signal delivery via Telegram webhook bots.
 
 ---
 
-## ⚖️ Yasal Uyarı (SPK & Mevzuat)
+## ⚖️ Legal & Regulatory Disclaimer
 
-> **ÖNEMLİ:** Bu yazılım ve analiz terminali; niceliksel finans, algoritmik modeller ve makine öğrenmesi uygulamalarını test etmek amacıyla **yalnızca eğitim, akademik araştırma ve simülasyon amaçlı** geliştirilmiştir.
+> **IMPORTANT NOTICE:** This software and web terminal are developed **strictly for educational, academic research, and simulation purposes**.
 >
-> Burada üretilen alım-satım sinyalleri, teknik indikatörler ve yapay zeka model tahminleri **kesinlikle yatırım tavsiyesi (YTD)** veya portföy yöneticiliği kapsamında değerlendirilemez. Finansal piyasalarda işlem yapmak sermaye kaybı riski barındırır.
+> Under no circumstances should the signals, indicators, model weights, or predictions generated by this platform be construed as financial advice, investment recommendations, or portfolio management. Trading financial instruments carries substantial risk of capital loss.
 
 ---
 
-## 👨‍💻 Geliştirici & Katkı
-Geliştirici: **Deniz Sena**  
-Sorularınız, hata bildirimleri veya özellik talepleri için bir [Issue](https://github.com/Denizsenac/algorithmic_trading_analysis/issues) açabilir ya da Pull Request gönderebilirsiniz.
+## 👨‍💻 Author & Contributions
+
+Created by **Deniz Sena**.  
+Feel free to open an [Issue](https://github.com/Denizsenac/algorithmic_trading_analysis/issues) or submit a Pull Request to contribute!
