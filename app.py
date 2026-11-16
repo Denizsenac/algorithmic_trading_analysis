@@ -140,85 +140,84 @@ if "target_input" not in st.session_state:
 # =============================================================================
 if not st.session_state["app_unlocked"]:
     st.markdown("""
-    <div class="hero-container">
-        <div style="display: flex; align-items: center; margin-bottom: 12px;">
+    <div class="hero-container" style="padding: 25px; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; margin-bottom: 8px;">
             <span class="live-dot"></span>
             <span style="color: #00E699; font-weight: 600; font-size: 0.85rem; letter-spacing: 1.5px;">CANLI HİBRİT PİYASA MOTORU v2.0</span>
         </div>
-        <h1 style="font-size: 2.8rem; font-weight: 800; margin: 0; background: linear-gradient(90deg, #FFFFFF 0%, #B4C6EE 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        <h1 style="font-size: 2.4rem; font-weight: 800; margin: 0; background: linear-gradient(90deg, #FFFFFF 0%, #B4C6EE 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
             QuantAI Trading Terminal
         </h1>
-        <p style="color: #8E9BAE; font-size: 1.15rem; margin-top: 10px; max-width: 800px; line-height: 1.6;">
+        <p style="color: #8E9BAE; font-size: 1.05rem; margin-top: 8px; line-height: 1.5;">
             Borsa İstanbul (BIST) ve Global piyasalar için teknik göstergeler, Google News duyarlılık analizi 
             ve makine öğrenmesi destekli yeni nesil algoritmik analiz platformu.
         </p>
     </div>
     """, unsafe_allow_html=True)
 
-    # 3'lü Özellik Kartları
+    # 3'lü Tıklanabilir Modül Kartları
     c1, c2, c3 = st.columns(3)
     with c1:
         st.markdown("""
-        <div class="feature-card">
+        <div class="feature-card" style="margin-bottom: 10px;">
             <h3 style="color: #4A90E2; margin-top: 0;">⚡ Hibrit Sinyal Motoru</h3>
-            <p style="color: #A0AEC0; font-size: 0.95rem; line-height: 1.5;">
+            <p style="color: #A0AEC0; font-size: 0.9rem; line-height: 1.4;">
                 Tekil mum yanılgılarını önleyen çift teyitli EMA (9/21) ve SMA 20 trend analizi. 
                 RSI momentum filtreleri ve otomatik haber duyarlılık puanlaması.
             </p>
         </div>
         """, unsafe_allow_html=True)
+        if st.button("⚡ Sinyal Modülüne Giriş Yap", key="entry_signals", type="primary", use_container_width=True):
+            st.session_state["app_unlocked"] = True
+            st.rerun()
 
     with c2:
         st.markdown("""
-        <div class="feature-card">
+        <div class="feature-card" style="margin-bottom: 10px;">
             <h3 style="color: #00E699; margin-top: 0;">🛡️ Dinamik Risk Yönetimi</h3>
-            <p style="color: #A0AEC0; font-size: 0.95rem; line-height: 1.5;">
+            <p style="color: #A0AEC0; font-size: 0.9rem; line-height: 1.4;">
                 Piyasa oynaklığına uyum sağlayan <b>ATR Tabanlı Trailing Stop</b> algoritması. 
                 Kârı zirveden itibaren kilitler, sert geri çekilmelerde sermayeyi savunur.
             </p>
         </div>
         """, unsafe_allow_html=True)
+        if st.button("🛡️ Risk & Backtest'e Giriş Yap", key="entry_risk", type="primary", use_container_width=True):
+            st.session_state["app_unlocked"] = True
+            st.rerun()
 
     with c3:
         st.markdown("""
-        <div class="feature-card">
+        <div class="feature-card" style="margin-bottom: 10px;">
             <h3 style="color: #9B51E0; margin-top: 0;">🧠 Durağan Getiri Modeli</h3>
-            <p style="color: #A0AEC0; font-size: 0.95rem; line-height: 1.5;">
+            <p style="color: #A0AEC0; font-size: 0.9rem; line-height: 1.4;">
                 Rastgele yürüyüş (random walk) yanılgısını kıran, ham fiyat yerine <b>yüzdesel getiri</b> 
                 tahmini üreten ve yön isabet oranını (Hit Rate) denetleyen ML mimarisi.
             </p>
         </div>
         """, unsafe_allow_html=True)
+        if st.button("🧠 AI Tahminine Giriş Yap", key="entry_ai", type="primary", use_container_width=True):
+            st.session_state["app_unlocked"] = True
+            st.rerun()
 
     # Yasal Uyarı Kutusu
     st.markdown("""
-    <div class="disclaimer-box">
-        <h4 style="color: #FFAB00; margin: 0 0 8px 0; display: flex; align-items: center;">
+    <div class="disclaimer-box" style="margin-top: 20px;">
+        <h4 style="color: #FFAB00; margin: 0 0 6px 0;">
             ⚖️ ÖNEMLİ YASAL UYARI (SPK & Mevzuat Bilgilendirmesi)
         </h4>
-        Bu yazılım ve web terminali; niceliksel finans, makine öğrenmesi ve veri bilimi metodolojilerini 
-        göstermek amacıyla <b>yalnızca eğitim, akademik araştırma ve simülasyon amaçlı</b> geliştirilmiştir.<br><br>
-        Burada sunulan sinyaller, matematiksel hesaplamalar ve model tahminleri <b>hiçbir şekilde yatırım danışmanlığı (YTD) 
-        veya portföy yöneticiliği kapsamında değerlendirilemez.</b> Finansal piyasalarda işlem yapmak yüksek düzeyde 
-        sermaye kaybı riski barındırır. Gerçek yatırımlarınızı lisanslı bir finansal kuruluşa danışarak yapınız.
+        Bu platform; niceliksel finans ve veri bilimi metodolojilerini göstermek amacıyla <b>yalnızca eğitim, akademik araştırma ve simülasyon amaçlı</b> geliştirilmiştir. 
+        Burada sunulan sinyaller ve model tahminleri <b>kesinlikle yatırım tavsiyesi (YTD) değildir.</b> 
+        Terminale giriş yaparak kullanım şartlarını kabul etmiş sayılırsınız.
     </div>
     """, unsafe_allow_html=True)
 
-    st.write("")
-    col_agree, col_btn = st.columns([1.5, 1])
-    with col_agree:
-        agree = st.checkbox(
-            "Yasal uyarı metnini okudum, anladım ve analiz terminalini eğitim/araştırma amacıyla kullanmayı kabul ediyorum.",
-            value=False
-        )
-    with col_btn:
-        start_btn = st.button("🚀 ANALİZ TERMİNALİNİ BAŞLAT", type="primary", use_container_width=True, disabled=not agree)
-
-    if start_btn and agree:
+    # Doğrudan Ana Giriş Butonu
+    if st.button("🚀 TÜM TERMİNALİ BAŞLAT (TEK TIKLA GİRİŞ)", type="primary", use_container_width=True):
         st.session_state["app_unlocked"] = True
         st.rerun()
 
     st.stop()
+
 
 
 # =============================================================================
