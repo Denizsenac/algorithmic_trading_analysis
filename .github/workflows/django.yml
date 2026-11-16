@@ -24,7 +24,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    - name: Run Smoke Test
+    - name: Run Unit Tests
       run: |
-        python main.py AAPL --demo --no-chart
+        python test_project.py
 
