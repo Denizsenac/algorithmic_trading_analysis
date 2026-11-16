@@ -132,7 +132,7 @@ st.markdown("""
 if "app_unlocked" not in st.session_state:
     st.session_state["app_unlocked"] = False
 if "target_input" not in st.session_state:
-    st.session_state["target_input"] = "THYAO.IS"
+    st.session_state["target_input"] = ""
 
 
 # =============================================================================
@@ -249,14 +249,17 @@ with st.sidebar:
     cols_q = st.columns(3)
     for i, q in enumerate(quick_tickers):
         with cols_q[i % 3]:
-            if st.button(q, key=f"btn_{q}", use_container_width=True):
+            if st.button(q, key=f"btn_sb_{q}", use_container_width=True):
                 st.session_state["target_input"] = q
                 st.rerun()
 
-    target_input = st.text_input(
+    typed_ticker = st.text_input(
         "Hisse Sembolü veya Şirket Adı:",
-        value=st.session_state.get("target_input", "THYAO.IS")
+        value=st.session_state.get("target_input", ""),
+        placeholder="Örn: THYAO, ASELS, AAPL..."
     )
+    if typed_ticker != st.session_state.get("target_input", ""):
+        st.session_state["target_input"] = typed_ticker
 
     col_s1, col_s2 = st.columns(2)
     with col_s1:
@@ -270,7 +273,15 @@ with st.sidebar:
 
     demo_mode = st.checkbox("Demo Modu (Sentetik Haberler)", value=False)
     st.divider()
-    analyze_btn = st.button("🔄 Analizi Yenile", type="primary", use_container_width=True)
+    
+    col_sb1, col_sb2 = st.columns(2)
+    with col_sb1:
+        if st.button("🚀 Analiz Et", type="primary", use_container_width=True):
+            st.rerun()
+    with col_sb2:
+        if st.button("🔄 Sıfırla", use_container_width=True):
+            st.session_state["target_input"] = ""
+            st.rerun()
 
 
 # Veri Çekme Motoru
@@ -299,12 +310,111 @@ def load_and_process_data(ticker_symbol, selected_period, is_demo):
     return final_dataset, news_df, price_df
 
 
+# Kullanıcının girdiği arama girdisi kontrolü
+current_input = st.session_state.get("target_input", "").strip()
+
+if not current_input:
+    # Kullanıcı henüz hisse seçmedi: Karşılama ve Arama Ekranı Göster
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, rgba(20, 24, 36, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%); 
+                border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 16px; padding: 40px 30px; text-align: center; margin-top: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);">
+        <div style="display: inline-flex; align-items: center; justify-content: center; width: 68px; height: 68px; border-radius: 50%; background: rgba(74, 144, 226, 0.15); border: 1px solid rgba(74, 144, 226, 0.4); margin-bottom: 16px;">
+            <span style="font-size: 2.2rem;">🔍</span>
+        </div>
+        <h2 style="margin: 0 0 10px 0; font-size: 2.1rem; font-weight: 800; background: linear-gradient(90deg, #FFFFFF 0%, #B4C6EE 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            Hangi Hisseyi Analiz Etmek İstiyorsunuz?
+        </h2>
+        <p style="color: #94A3B8; font-size: 1.05rem; max-width: 620px; margin: 0 auto 20px auto; line-height: 1.6;">
+            Otomatik arama yerine ilk aramayı siz belirleyin. BIST veya Global bir hisse sembolü (veya şirket adı) girerek 
+            teknik sinyalleri, risk analizini ve yapay zeka tahminini başlatabilirsiniz.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("<div style='margin-top: 25px;'></div>", unsafe_allow_html=True)
+    
+    # Doğrudan Ana Ekranda Arama Çubuğu
+    search_col1, search_col2 = st.columns([5, 1])
+    with search_col1:
+        main_query = st.text_input(
+            "Hisse Arama:",
+            placeholder="Örn: THYAO, ASELS, GARAN, EREGL, AAPL, NVDA, TSLA...",
+            label_visibility="collapsed",
+            key="main_search_box"
+        )
+    with search_col2:
+        if st.button("🔎 Analiz Et", type="primary", use_container_width=True, key="btn_main_search"):
+            if main_query.strip():
+                st.session_state["target_input"] = main_query.strip()
+                st.rerun()
+            else:
+                st.warning("Lütfen bir sembol veya hisse adı yazın.")
+
+    if main_query and main_query.strip() != "":
+        if main_query.strip() != st.session_state.get("target_input", ""):
+            st.session_state["target_input"] = main_query.strip()
+            st.rerun()
+
+    st.markdown("<div style='margin-top: 35px;'></div>", unsafe_allow_html=True)
+    st.markdown("#### ⚡ Popüler Hisseler (Tek Tıkla Analiz Başlat)")
+    
+    col_bist, col_global = st.columns(2)
+    with col_bist:
+        st.markdown("""
+        <div style="background: rgba(26, 32, 48, 0.6); padding: 14px 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 12px;">
+            <h5 style="margin: 0; color: #4A90E2; font-weight: 700;">🇹🇷 Borsa İstanbul (BIST 30)</h5>
+        </div>
+        """, unsafe_allow_html=True)
+        bist_chips = [
+            ("THYAO.IS", "Türk Hava Yolları"),
+            ("ASELS.IS", "Aselsan"),
+            ("GARAN.IS", "Garanti BBVA"),
+            ("EREGL.IS", "Erdemir"),
+            ("KCHOL.IS", "Koç Holding"),
+            ("SISE.IS", "Şişecam")
+        ]
+        b_c1, b_c2 = st.columns(2)
+        for idx, (sym, name) in enumerate(bist_chips):
+            col_target = b_c1 if idx % 2 == 0 else b_c2
+            with col_target:
+                if st.button(f"{sym}\n({name})", key=f"chip_bist_{sym}", use_container_width=True):
+                    st.session_state["target_input"] = sym
+                    st.rerun()
+
+    with col_global:
+        st.markdown("""
+        <div style="background: rgba(26, 32, 48, 0.6); padding: 14px 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 12px;">
+            <h5 style="margin: 0; color: #00E699; font-weight: 700;">🌍 Global Piyasalar (ABD & Tech)</h5>
+        </div>
+        """, unsafe_allow_html=True)
+        global_chips = [
+            ("AAPL", "Apple Inc."),
+            ("NVDA", "NVIDIA Corp."),
+            ("TSLA", "Tesla Inc."),
+            ("MSFT", "Microsoft"),
+            ("AMZN", "Amazon"),
+            ("GOOGL", "Alphabet")
+        ]
+        g_c1, g_c2 = st.columns(2)
+        for idx, (sym, name) in enumerate(global_chips):
+            col_target = g_c1 if idx % 2 == 0 else g_c2
+            with col_target:
+                if st.button(f"{sym}\n({name})", key=f"chip_global_{sym}", use_container_width=True):
+                    st.session_state["target_input"] = sym
+                    st.rerun()
+
+    st.stop()
+
+
 # Sembol Çözümleme
 search_engine = TickerSearch()
-target_ticker = search_engine.search_company(target_input, interactive=False)
+target_ticker = search_engine.search_company(current_input, interactive=False)
 
 if not target_ticker:
-    st.error(f"'{target_input}' için borsa sembolü bulunamadı. Lütfen sembolü kontrol edin.")
+    st.error(f"'{current_input}' için borsa sembolü bulunamadı. Lütfen sembolü kontrol edin.")
+    if st.button("⬅️ Yeni Arama Yap", type="primary"):
+        st.session_state["target_input"] = ""
+        st.rerun()
     st.stop()
 
 # Animasyonlu İlerleme Çubuğu ile Yükleme
@@ -351,18 +461,25 @@ last_actual_date_str = last_actual_date.strftime('%Y-%m-%d')
 currency_symbol = "₺" if target_ticker.endswith(".IS") else "$"
 
 # Başlık Bölümü
-st.markdown(f"""
-<div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px;">
-    <div>
-        <h2 style="margin: 0; font-size: 2.2rem; font-weight: 800;">{target_ticker}</h2>
-        <span style="color: #8E9BAE; font-size: 0.95rem;">Son Güncelleme: {last_actual_date.strftime('%d.%m.%Y')} • Analiz Periyodu: {period.upper()}</span>
+col_header_title, col_header_search = st.columns([5, 1.2])
+with col_header_title:
+    st.markdown(f"""
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px;">
+        <div>
+            <h2 style="margin: 0; font-size: 2.2rem; font-weight: 800;">{target_ticker}</h2>
+            <span style="color: #8E9BAE; font-size: 0.95rem;">Son Güncelleme: {last_actual_date.strftime('%d.%m.%Y')} • Analiz Periyodu: {period.upper()}</span>
+        </div>
+        <div style="text-align: right;">
+            <span style="font-size: 0.85rem; color: #8E9BAE;">Anlık Fiyat</span>
+            <div style="font-size: 2rem; font-weight: 800; color: #FFFFFF;">{currency_symbol}{last_actual_price:,.2f}</div>
+        </div>
     </div>
-    <div style="text-align: right;">
-        <span style="font-size: 0.85rem; color: #8E9BAE;">Anlık Fiyat</span>
-        <div style="font-size: 2rem; font-weight: 800; color: #FFFFFF;">{currency_symbol}{last_actual_price:,.2f}</div>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
+with col_header_search:
+    st.markdown("<div style='margin-top: 5px;'></div>", unsafe_allow_html=True)
+    if st.button("🔍 Başka Hisse Ara", use_container_width=True):
+        st.session_state["target_input"] = ""
+        st.rerun()
 
 # 4'lü Dinamik Performans Kartları
 c1, c2, c3, c4 = st.columns(4)
