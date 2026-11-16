@@ -199,17 +199,23 @@ if not st.session_state["app_unlocked"]:
             st.session_state["app_unlocked"] = True
             st.rerun()
 
-    # Yasal Uyarı Kutusu
+    # Yasal Uyarı Kutusu (Yüksek Kontrastlı & Çok Belirgin Görünüm)
     st.markdown("""
-    <div class="disclaimer-box" style="margin-top: 20px;">
-        <h4 style="color: #FFAB00; margin: 0 0 6px 0;">
+    <div style="background: #141824; border: 2px solid #F59E0B; border-left: 8px solid #F59E0B; border-radius: 12px; padding: 22px; margin: 25px 0 15px 0; box-shadow: 0 4px 20px rgba(245, 158, 11, 0.25);">
+        <h4 style="color: #FBBF24; margin: 0 0 10px 0; font-size: 1.15rem; font-weight: 700; letter-spacing: 0.5px;">
             ⚖️ ÖNEMLİ YASAL UYARI (SPK & Mevzuat Bilgilendirmesi)
         </h4>
-        Bu platform; niceliksel finans ve veri bilimi metodolojilerini göstermek amacıyla <b>yalnızca eğitim, akademik araştırma ve simülasyon amaçlı</b> geliştirilmiştir. 
-        Burada sunulan sinyaller ve model tahminleri <b>kesinlikle yatırım tavsiyesi (YTD) değildir.</b> 
-        Terminale giriş yaparak kullanım şartlarını kabul etmiş sayılırsınız.
+        <p style="color: #FFFFFF !important; font-size: 0.95rem; line-height: 1.6; margin: 0; font-weight: 400;">
+            Bu platform; niceliksel finans, algoritmik modeller ve makine öğrenmesi algoritmalarını göstermek amacıyla 
+            <b style="color: #FBBF24;">yalnızca eğitim, akademik araştırma ve simülasyon amaçlı</b> geliştirilmiştir.<br><br>
+            Platformda üretilen alım-satım sinyalleri, teknik indikatörler ve yapay zeka model tahminleri 
+            <b style="color: #F87171;">kesinlikle yatırım tavsiyesi (YTD) veya portföy yöneticiliği kapsamında değildir.</b> 
+            Finansal piyasalarda işlem yapmak sermaye kaybı riski barındırır. 
+            Aşağıdaki butona tıklayarak veya modüllere giriş yaparak kullanım koşullarını kabul etmiş sayılırsınız.
+        </p>
     </div>
     """, unsafe_allow_html=True)
+
 
     # Doğrudan Ana Giriş Butonu
     if st.button("🚀 TÜM TERMİNALİ BAŞLAT (TEK TIKLA GİRİŞ)", type="primary", use_container_width=True):
