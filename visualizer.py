@@ -59,13 +59,25 @@ class MarketVisualizer:
             name='ML Prediction'
         ))
 
-    def display_chart(self):
+    def display_chart(self, show_browser=True, save_html=True):
         # Grafiğin görsel temasını ayarlayıp tarayıcıda açıyoruz
         self.fig.update_layout(
             title=f"{self.ticker} - Algorithmic Trading Analysis & AI Prediction",
             yaxis_title="Price (USD)",
             xaxis_title="Date",
-            template="plotly_dark", # Siyah profesyonel tema
+            template="plotly_dark",  # Siyah profesyonel tema
             xaxis_rangeslider_visible=False
         )
-        self.fig.show()
+        if save_html:
+            try:
+                html_path = "analysis_chart.html"
+                self.fig.write_html(html_path)
+                print(f"Grafik dosyası kaydedildi: {html_path}")
+            except Exception as e:
+                print(f"Grafik dosyaya kaydedilemedi: {e}")
+        if show_browser:
+            try:
+                self.fig.show()
+            except Exception as e:
+                print(f"Tarayıcıda açılamadı ({e}), lütfen {html_path} dosyasını açın.")
+
