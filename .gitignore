@@ -5,3 +5,4 @@ __pycache__/
 predictions_log.json
 predictions_log.json.bak
 predictions_log.json.tmp
+*.html
