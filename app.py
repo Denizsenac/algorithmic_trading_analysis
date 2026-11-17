@@ -30,6 +30,21 @@ st.set_page_config(
 # -----------------------------------------------------------------------------
 st.markdown("""
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+    /* Global Tipografi & Font Standardı (Plus Jakarta Sans) */
+    html, body, [class*="css"], .stApp, button, input, select, textarea {
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Sayısal, Fiyat, Yüzde ve İndikatör Değerleri İçin Monospace (JetBrains Mono) */
+    code, pre, .metric-value, [data-testid="stMetricValue"], [data-testid="stMetricDelta"] {
+        font-family: 'JetBrains Mono', monospace !important;
+        letter-spacing: -0.3px;
+    }
+
     /* Yalnızca Deploy butonunu gizleme (Karanlık Mod / Ayarlar 3 nokta menüsü korunur) */
     .stDeployButton, .stAppDeployButton, [data-testid="stAppDeployButton"] {
         display: none !important;
@@ -58,8 +73,8 @@ st.markdown("""
     }
     
     .live-dot {
-        height: 10px;
-        width: 10px;
+        height: 9px;
+        width: 9px;
         background-color: #00E699;
         border-radius: 50%;
         display: inline-block;
@@ -71,17 +86,31 @@ st.markdown("""
         background: linear-gradient(135deg, #131826 0%, #1A2234 100%) !important;
         border: 1px solid rgba(255, 255, 255, 0.12) !important;
         border-radius: 16px !important;
-        padding: 32px 35px !important;
-        margin-bottom: 25px !important;
+        padding: 30px 32px !important;
+        margin-bottom: 22px !important;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+    }
+    .hero-container h1 {
+        font-size: 2.15rem !important;
+        font-weight: 800 !important;
+        letter-spacing: -0.5px !important;
+        line-height: 1.25 !important;
+        margin: 6px 0 8px 0 !important;
+    }
+    .hero-container p {
+        font-size: 0.95rem !important;
+        font-weight: 400 !important;
+        line-height: 1.6 !important;
+        color: #94A3B8 !important;
+        margin: 0 !important;
     }
     
     .feature-card {
         background: #141926 !important;
         border: 1px solid rgba(255, 255, 255, 0.12) !important;
         border-radius: 14px !important;
-        padding: 22px !important;
-        min-height: 165px !important;
+        padding: 22px 20px !important;
+        min-height: 168px !important;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35) !important;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
@@ -92,13 +121,16 @@ st.markdown("""
     }
     .feature-card h3 {
         margin: 0 0 10px 0 !important;
-        font-size: 1.25rem !important;
+        font-size: 1.12rem !important;
         font-weight: 700 !important;
+        letter-spacing: -0.2px !important;
+        line-height: 1.35 !important;
     }
     .feature-card p {
-        color: #E2E8F0 !important;
-        font-size: 0.94rem !important;
-        line-height: 1.55 !important;
+        color: #CBD5E1 !important;
+        font-size: 0.88rem !important;
+        font-weight: 400 !important;
+        line-height: 1.6 !important;
         margin: 0 !important;
     }
     
@@ -108,8 +140,8 @@ st.markdown("""
         border: 2px solid #F59E0B !important;
         border-left: 8px solid #F59E0B !important;
         border-radius: 12px !important;
-        padding: 22px 26px !important;
-        margin: 25px 0 18px 0 !important;
+        padding: 20px 24px !important;
+        margin: 22px 0 16px 0 !important;
         box-shadow: 0 8px 30px rgba(245, 158, 11, 0.25) !important;
     }
     .disclaimer-card, .disclaimer-card *, .disclaimer-card p, .disclaimer-card span, .disclaimer-card div {
@@ -117,17 +149,19 @@ st.markdown("""
     }
     .disclaimer-card h4 {
         color: #FBBF24 !important;
-        font-size: 1.15rem !important;
-        font-weight: 800 !important;
-        letter-spacing: 0.5px !important;
-        margin: 0 0 12px 0 !important;
+        font-size: 1.05rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.2px !important;
+        margin: 0 0 10px 0 !important;
     }
 
-    /* Buton Tasarımları */
+    /* Buton Tasarımları & Boyut Uyumu */
     div.stButton > button {
-        border-radius: 10px !important;
-        font-weight: 700 !important;
-        padding: 10px 18px !important;
+        border-radius: 9px !important;
+        font-size: 0.88rem !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.2px !important;
+        padding: 9px 16px !important;
         transition: all 0.2s ease-in-out !important;
     }
 
@@ -170,10 +204,10 @@ st.markdown("""
         background: linear-gradient(90deg, #00E699 0%, #0284C7 100%) !important;
         border: none !important;
         color: #07090E !important;
-        font-size: 1.12rem !important;
+        font-size: 1.05rem !important;
         font-weight: 800 !important;
         letter-spacing: 0.5px !important;
-        padding: 14px 24px !important;
+        padding: 13px 22px !important;
         box-shadow: 0 4px 20px rgba(0, 230, 153, 0.35) !important;
     }
     div.stButton > button[kind="primary"]:hover {
@@ -185,7 +219,7 @@ st.markdown("""
     .metric-card {
         background: rgba(26, 32, 48, 0.85);
         border-radius: 12px;
-        padding: 18px;
+        padding: 16px 18px;
         border: 1px solid rgba(255, 255, 255, 0.08);
         transition: transform 0.2s ease, border-color 0.2s ease;
     }
@@ -197,28 +231,28 @@ st.markdown("""
     .badge-positive {
         background-color: rgba(14, 203, 129, 0.18);
         color: #0ECB81;
-        padding: 4px 10px;
+        padding: 3px 8px;
         border-radius: 6px;
         font-weight: 600;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         border: 1px solid rgba(14, 203, 129, 0.3);
     }
     .badge-negative {
         background-color: rgba(246, 70, 93, 0.18);
         color: #F6465D;
-        padding: 4px 10px;
+        padding: 3px 8px;
         border-radius: 6px;
         font-weight: 600;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         border: 1px solid rgba(246, 70, 93, 0.3);
     }
     .badge-neutral {
         background-color: rgba(132, 142, 156, 0.18);
         color: #848E9C;
-        padding: 4px 10px;
+        padding: 3px 8px;
         border-radius: 6px;
         font-weight: 600;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         border: 1px solid rgba(132, 142, 156, 0.3);
     }
 </style>
@@ -236,15 +270,15 @@ if "target_input" not in st.session_state:
 # =============================================================================
 if not st.session_state["app_unlocked"]:
     st.markdown("""
-    <div class="hero-container" style="padding: 25px; margin-bottom: 20px;">
-        <div style="display: flex; align-items: center; margin-bottom: 8px;">
+    <div class="hero-container">
+        <div style="display: flex; align-items: center; margin-bottom: 6px;">
             <span class="live-dot"></span>
-            <span style="color: #00E699; font-weight: 600; font-size: 0.85rem; letter-spacing: 1.5px;">CANLI HİBRİT PİYASA MOTORU v2.0</span>
+            <span style="color: #00E699; font-weight: 700; font-size: 0.78rem; letter-spacing: 1.2px; text-transform: uppercase;">CANLI HİBRİT PİYASA MOTORU v2.0</span>
         </div>
-        <h1 style="font-size: 2.4rem; font-weight: 800; margin: 0; background: linear-gradient(90deg, #FFFFFF 0%, #B4C6EE 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        <h1 style="background: linear-gradient(90deg, #FFFFFF 0%, #CBD5E1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
             QuantAI Trading Terminal
         </h1>
-        <p style="color: #8E9BAE; font-size: 1.05rem; margin-top: 8px; line-height: 1.5;">
+        <p>
             Borsa İstanbul (BIST) ve Global piyasalar için teknik göstergeler, Google News duyarlılık analizi 
             ve makine öğrenmesi destekli yeni nesil algoritmik analiz platformu.
         </p>
@@ -298,17 +332,17 @@ if not st.session_state["app_unlocked"]:
     # Yasal Uyarı Kutusu (Garantili Bembeyaz & Yüksek Kontrastlı Metin)
     st.markdown("""
     <div class="disclaimer-card">
-        <div style="display: flex; align-items: center; margin-bottom: 12px;">
-            <span style="font-size: 1.4rem; margin-right: 10px;">⚖️</span>
-            <span style="color: #FBBF24 !important; font-size: 1.15rem; font-weight: 800; letter-spacing: 0.5px;">
+        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+            <span style="font-size: 1.3rem; margin-right: 8px;">⚖️</span>
+            <span style="color: #FBBF24 !important; font-size: 1.02rem; font-weight: 700; letter-spacing: 0.3px;">
                 ÖNEMLİ YASAL UYARI (SPK & Mevzuat Bilgilendirmesi)
             </span>
         </div>
-        <div style="color: #FFFFFF !important; font-size: 0.98rem; line-height: 1.7; font-weight: 400;">
+        <div style="color: #FFFFFF !important; font-size: 0.88rem; line-height: 1.65; font-weight: 400;">
             Bu platform; niceliksel finans, algoritmik modeller ve makine öğrenmesi algoritmalarını göstermek amacıyla 
-            <span style="color: #FBBF24 !important; font-weight: 700; background: rgba(251, 191, 36, 0.2); padding: 2px 7px; border-radius: 4px;">yalnızca eğitim, akademik araştırma ve simülasyon amaçlı</span> geliştirilmiştir.<br><br>
+            <span style="color: #FBBF24 !important; font-weight: 700; background: rgba(251, 191, 36, 0.18); padding: 2px 6px; border-radius: 4px;">yalnızca eğitim, akademik araştırma ve simülasyon amaçlı</span> geliştirilmiştir.<br><br>
             Platformda üretilen alım-satım sinyalleri, teknik indikatörler ve yapay zeka model tahminleri 
-            <span style="color: #FB7185 !important; font-weight: 700; background: rgba(251, 113, 133, 0.2); padding: 2px 7px; border-radius: 4px;">kesinlikle yatırım tavsiyesi (YTD) veya portföy yöneticiliği kapsamında değildir.</span> 
+            <span style="color: #FB7185 !important; font-weight: 700; background: rgba(251, 113, 133, 0.18); padding: 2px 6px; border-radius: 4px;">kesinlikle yatırım tavsiyesi (YTD) veya portföy yöneticiliği kapsamında değildir.</span> 
             Finansal piyasalarda işlem yapmak sermaye kaybı riski barındırır. 
             Aşağıdaki butona tıklayarak veya modüllere giriş yaparak kullanım koşullarını kabul etmiş sayılırsınız.
         </div>
@@ -414,22 +448,22 @@ current_input = st.session_state.get("target_input", "").strip()
 if not current_input:
     # Kullanıcı henüz hisse seçmedi: Karşılama ve Arama Ekranı Göster
     st.markdown("""
-    <div style="background: linear-gradient(135deg, rgba(20, 24, 36, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%); 
-                border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 16px; padding: 40px 30px; text-align: center; margin-top: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);">
-        <div style="display: inline-flex; align-items: center; justify-content: center; width: 68px; height: 68px; border-radius: 50%; background: rgba(74, 144, 226, 0.15); border: 1px solid rgba(74, 144, 226, 0.4); margin-bottom: 16px;">
-            <span style="font-size: 2.2rem;">🔍</span>
+    <div style="background: linear-gradient(135deg, #131826 0%, #1A2234 100%); 
+                border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 16px; padding: 32px 28px; text-align: center; margin-top: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.45);">
+        <div style="display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; background: rgba(74, 144, 226, 0.15); border: 1px solid rgba(74, 144, 226, 0.35); margin-bottom: 14px;">
+            <span style="font-size: 1.8rem;">🔍</span>
         </div>
-        <h2 style="margin: 0 0 10px 0; font-size: 2.1rem; font-weight: 800; background: linear-gradient(90deg, #FFFFFF 0%, #B4C6EE 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        <h2 style="margin: 0 0 8px 0; font-size: 1.65rem; font-weight: 800; letter-spacing: -0.3px; background: linear-gradient(90deg, #FFFFFF 0%, #CBD5E1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
             Hangi Hisseyi Analiz Etmek İstiyorsunuz?
         </h2>
-        <p style="color: #94A3B8; font-size: 1.05rem; max-width: 620px; margin: 0 auto 20px auto; line-height: 1.6;">
-            Otomatik arama yerine ilk aramayı siz belirleyin. BIST veya Global bir hisse sembolü (veya şirket adı) girerek 
+        <p style="color: #94A3B8; font-size: 0.92rem; max-width: 580px; margin: 0 auto; line-height: 1.6;">
+            Otomatik arama yerine ilk aramayı siz belirleyin. BIST veya Global bir hisse sembolü girerek 
             teknik sinyalleri, risk analizini ve yapay zeka tahminini başlatabilirsiniz.
         </p>
     </div>
     """, unsafe_allow_html=True)
 
-    st.markdown("<div style='margin-top: 25px;'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='margin-top: 22px;'></div>", unsafe_allow_html=True)
     
     # Doğrudan Ana Ekranda Arama Çubuğu
     search_col1, search_col2 = st.columns([5, 1])
@@ -453,14 +487,14 @@ if not current_input:
             st.session_state["target_input"] = main_query.strip()
             st.rerun()
 
-    st.markdown("<div style='margin-top: 35px;'></div>", unsafe_allow_html=True)
-    st.markdown("#### ⚡ Popüler Hisseler (Tek Tıkla Analiz Başlat)")
+    st.markdown("<div style='margin-top: 30px;'></div>", unsafe_allow_html=True)
+    st.markdown("<h4 style='font-size: 1.05rem; font-weight: 700; margin-bottom: 12px;'>⚡ Popüler Hisseler (Tek Tıkla Analiz Başlat)</h4>", unsafe_allow_html=True)
     
     col_bist, col_global = st.columns(2)
     with col_bist:
         st.markdown("""
-        <div style="background: rgba(26, 32, 48, 0.6); padding: 14px 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 12px;">
-            <h5 style="margin: 0; color: #4A90E2; font-weight: 700;">🇹🇷 Borsa İstanbul (BIST 30)</h5>
+        <div style="background: rgba(26, 32, 48, 0.6); padding: 12px 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 12px;">
+            <h5 style="margin: 0; color: #4A90E2; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.2px;">🇹🇷 Borsa İstanbul (BIST 30)</h5>
         </div>
         """, unsafe_allow_html=True)
         bist_chips = [
@@ -481,8 +515,8 @@ if not current_input:
 
     with col_global:
         st.markdown("""
-        <div style="background: rgba(26, 32, 48, 0.6); padding: 14px 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 12px;">
-            <h5 style="margin: 0; color: #00E699; font-weight: 700;">🌍 Global Piyasalar (ABD & Tech)</h5>
+        <div style="background: rgba(26, 32, 48, 0.6); padding: 12px 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 12px;">
+            <h5 style="margin: 0; color: #00E699; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.2px;">🌍 Global Piyasalar (ABD & Tech)</h5>
         </div>
         """, unsafe_allow_html=True)
         global_chips = [
@@ -562,14 +596,14 @@ currency_symbol = "₺" if target_ticker.endswith(".IS") else "$"
 col_header_title, col_header_search = st.columns([5, 1.2])
 with col_header_title:
     st.markdown(f"""
-    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 12px;">
         <div>
-            <h2 style="margin: 0; font-size: 2.2rem; font-weight: 800;">{target_ticker}</h2>
-            <span style="color: #8E9BAE; font-size: 0.95rem;">Son Güncelleme: {last_actual_date.strftime('%d.%m.%Y')} • Analiz Periyodu: {period.upper()}</span>
+            <h2 style="margin: 0 0 4px 0; font-size: 1.85rem; font-weight: 800; letter-spacing: -0.4px;">{target_ticker}</h2>
+            <span style="color: #64748B; font-size: 0.82rem; font-weight: 500;">Son Güncelleme: {last_actual_date.strftime('%d.%m.%Y')} • Analiz Periyodu: {period.upper()}</span>
         </div>
         <div style="text-align: right;">
-            <span style="font-size: 0.85rem; color: #8E9BAE;">Anlık Fiyat</span>
-            <div style="font-size: 2rem; font-weight: 800; color: #FFFFFF;">{currency_symbol}{last_actual_price:,.2f}</div>
+            <span style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: #94A3B8;">Anlık Fiyat</span>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.85rem; font-weight: 800; color: #FFFFFF; letter-spacing: -0.5px;">{currency_symbol}{last_actual_price:,.2f}</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
