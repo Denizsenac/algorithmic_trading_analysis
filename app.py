@@ -30,8 +30,8 @@ st.set_page_config(
 # -----------------------------------------------------------------------------
 st.markdown("""
 <style>
-    /* Streamlit Deploy butonu ve üst menüyü gizleme */
-    .stDeployButton, .stAppDeployButton, [data-testid="stAppDeployButton"], #MainMenu {
+    /* Yalnızca Deploy butonunu gizleme (Karanlık Mod / Ayarlar 3 nokta menüsü korunur) */
+    .stDeployButton, .stAppDeployButton, [data-testid="stAppDeployButton"] {
         display: none !important;
         visibility: hidden !important;
     }
