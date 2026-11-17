@@ -30,6 +30,12 @@ st.set_page_config(
 # -----------------------------------------------------------------------------
 st.markdown("""
 <style>
+    /* Streamlit Deploy butonu ve üst menüyü gizleme */
+    .stDeployButton, .stAppDeployButton, [data-testid="stAppDeployButton"], #MainMenu {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
     @keyframes pulse {
         0% { transform: scale(1); opacity: 1; }
         50% { transform: scale(1.05); opacity: 0.8; }
