@@ -26,7 +26,7 @@ st.set_page_config(
 )
 
 # -----------------------------------------------------------------------------
-# Hareketli & Modern CSS Animasyonları ve Glassmorphism Teması
+# Hareketli & Modern CSS Animasyonları ve Kurumsal Dark Fintech Teması
 # -----------------------------------------------------------------------------
 st.markdown("""
 <style>
@@ -34,6 +34,16 @@ st.markdown("""
     .stDeployButton, .stAppDeployButton, [data-testid="stAppDeployButton"] {
         display: none !important;
         visibility: hidden !important;
+    }
+
+    /* Temel Koyu Tema & Yüksek Kontrast Standartları */
+    .stApp {
+        background-color: #0B0E14 !important;
+        color: #F8FAFC !important;
+    }
+    
+    .stMarkdown, .stMarkdown p, .stMarkdown span, .stMarkdown div {
+        color: inherit;
     }
 
     @keyframes pulse {
@@ -58,38 +68,118 @@ st.markdown("""
     }
     
     .hero-container {
-        background: linear-gradient(135deg, rgba(20, 24, 35, 0.95) 0%, rgba(32, 38, 55, 0.95) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
-        padding: 35px;
-        margin-bottom: 25px;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        background: linear-gradient(135deg, #131826 0%, #1A2234 100%) !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        border-radius: 16px !important;
+        padding: 32px 35px !important;
+        margin-bottom: 25px !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
     }
     
     .feature-card {
-        background: rgba(25, 30, 45, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        padding: 20px;
-        height: 100%;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background: #141926 !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        border-radius: 14px !important;
+        padding: 22px !important;
+        min-height: 165px !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35) !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
     .feature-card:hover {
-        transform: translateY(-5px);
-        border-color: rgba(0, 230, 153, 0.5);
-        box-shadow: 0 10px 25px -5px rgba(0, 230, 153, 0.2);
+        transform: translateY(-4px) !important;
+        border-color: rgba(56, 189, 248, 0.4) !important;
+        box-shadow: 0 10px 25px rgba(56, 189, 248, 0.15) !important;
+    }
+    .feature-card h3 {
+        margin: 0 0 10px 0 !important;
+        font-size: 1.25rem !important;
+        font-weight: 700 !important;
+    }
+    .feature-card p {
+        color: #E2E8F0 !important;
+        font-size: 0.94rem !important;
+        line-height: 1.55 !important;
+        margin: 0 !important;
     }
     
-    .disclaimer-box {
-        background: rgba(255, 171, 0, 0.06);
-        border-left: 4px solid #FFAB00;
-        border-radius: 8px;
-        padding: 18px;
-        margin: 20px 0;
-        font-size: 0.9rem;
-        line-height: 1.5;
-        color: #E6E8EB;
+    /* Yasal Uyarı Kutusu ve Metin Kontrastı Garantisi */
+    .disclaimer-card {
+        background: #101522 !important;
+        border: 2px solid #F59E0B !important;
+        border-left: 8px solid #F59E0B !important;
+        border-radius: 12px !important;
+        padding: 22px 26px !important;
+        margin: 25px 0 18px 0 !important;
+        box-shadow: 0 8px 30px rgba(245, 158, 11, 0.25) !important;
+    }
+    .disclaimer-card, .disclaimer-card *, .disclaimer-card p, .disclaimer-card span, .disclaimer-card div {
+        color: #FFFFFF !important;
+    }
+    .disclaimer-card h4 {
+        color: #FBBF24 !important;
+        font-size: 1.15rem !important;
+        font-weight: 800 !important;
+        letter-spacing: 0.5px !important;
+        margin: 0 0 12px 0 !important;
+    }
+
+    /* Buton Tasarımları */
+    div.stButton > button {
+        border-radius: 10px !important;
+        font-weight: 700 !important;
+        padding: 10px 18px !important;
+        transition: all 0.2s ease-in-out !important;
+    }
+
+    /* Modül Butonları - Her birine özel şık renk */
+    div[data-testid="stColumn"]:nth-child(1) div.stButton > button {
+        background: #0F2942 !important;
+        border: 1px solid #38BDF8 !important;
+        color: #38BDF8 !important;
+    }
+    div[data-testid="stColumn"]:nth-child(1) div.stButton > button:hover {
+        background: #0284C7 !important;
+        color: #FFFFFF !important;
+        box-shadow: 0 0 15px rgba(56, 189, 248, 0.5) !important;
+    }
+
+    div[data-testid="stColumn"]:nth-child(2) div.stButton > button {
+        background: #0D3327 !important;
+        border: 1px solid #34D399 !important;
+        color: #34D399 !important;
+    }
+    div[data-testid="stColumn"]:nth-child(2) div.stButton > button:hover {
+        background: #059669 !important;
+        color: #FFFFFF !important;
+        box-shadow: 0 0 15px rgba(52, 211, 153, 0.5) !important;
+    }
+
+    div[data-testid="stColumn"]:nth-child(3) div.stButton > button {
+        background: #2D1A4E !important;
+        border: 1px solid #C084FC !important;
+        color: #C084FC !important;
+    }
+    div[data-testid="stColumn"]:nth-child(3) div.stButton > button:hover {
+        background: #7C3AED !important;
+        color: #FFFFFF !important;
+        box-shadow: 0 0 15px rgba(192, 132, 252, 0.5) !important;
+    }
+
+    /* Ana Başlat Butonu */
+    div.stButton > button[kind="primary"] {
+        background: linear-gradient(90deg, #00E699 0%, #0284C7 100%) !important;
+        border: none !important;
+        color: #07090E !important;
+        font-size: 1.12rem !important;
+        font-weight: 800 !important;
+        letter-spacing: 0.5px !important;
+        padding: 14px 24px !important;
+        box-shadow: 0 4px 20px rgba(0, 230, 153, 0.35) !important;
+    }
+    div.stButton > button[kind="primary"]:hover {
+        box-shadow: 0 6px 30px rgba(0, 230, 153, 0.6) !important;
+        transform: translateY(-2px) !important;
+        color: #000000 !important;
     }
 
     .metric-card {
@@ -165,66 +255,68 @@ if not st.session_state["app_unlocked"]:
     c1, c2, c3 = st.columns(3)
     with c1:
         st.markdown("""
-        <div class="feature-card" style="margin-bottom: 10px;">
-            <h3 style="color: #4A90E2; margin-top: 0;">⚡ Hibrit Sinyal Motoru</h3>
-            <p style="color: #A0AEC0; font-size: 0.9rem; line-height: 1.4;">
-                Tekil mum yanılgılarını önleyen çift teyitli EMA (9/21) ve SMA 20 trend analizi. 
+        <div class="feature-card" style="margin-bottom: 12px;">
+            <h3 style="color: #38BDF8 !important;">⚡ Hibrit Sinyal Motoru</h3>
+            <p>
+                Tekil mum yanılgılarını önleyen çift teyitli <b>EMA (9/21)</b> ve <b>SMA 20</b> trend analizi. 
                 RSI momentum filtreleri ve otomatik haber duyarlılık puanlaması.
             </p>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("⚡ Sinyal Modülüne Giriş Yap", key="entry_signals", type="primary", use_container_width=True):
+        if st.button("⚡ Sinyal Modülü ile Başlat", key="entry_signals", use_container_width=True):
             st.session_state["app_unlocked"] = True
             st.rerun()
 
     with c2:
         st.markdown("""
-        <div class="feature-card" style="margin-bottom: 10px;">
-            <h3 style="color: #00E699; margin-top: 0;">🛡️ Dinamik Risk Yönetimi</h3>
-            <p style="color: #A0AEC0; font-size: 0.9rem; line-height: 1.4;">
+        <div class="feature-card" style="margin-bottom: 12px;">
+            <h3 style="color: #34D399 !important;">🛡️ Dinamik Risk Yönetimi</h3>
+            <p>
                 Piyasa oynaklığına uyum sağlayan <b>ATR Tabanlı Trailing Stop</b> algoritması. 
                 Kârı zirveden itibaren kilitler, sert geri çekilmelerde sermayeyi savunur.
             </p>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("🛡️ Risk & Backtest'e Giriş Yap", key="entry_risk", type="primary", use_container_width=True):
+        if st.button("🛡️ Risk & Backtest ile Başlat", key="entry_risk", use_container_width=True):
             st.session_state["app_unlocked"] = True
             st.rerun()
 
     with c3:
         st.markdown("""
-        <div class="feature-card" style="margin-bottom: 10px;">
-            <h3 style="color: #9B51E0; margin-top: 0;">🧠 Durağan Getiri Modeli</h3>
-            <p style="color: #A0AEC0; font-size: 0.9rem; line-height: 1.4;">
-                Rastgele yürüyüş (random walk) yanılgısını kıran, ham fiyat yerine <b>yüzdesel getiri</b> 
+        <div class="feature-card" style="margin-bottom: 12px;">
+            <h3 style="color: #C084FC !important;">🧠 Durağan Getiri Modeli</h3>
+            <p>
+                Rastgele yürüyüş yanılgısını kıran, ham fiyat yerine <b>yüzdesel getiri</b> 
                 tahmini üreten ve yön isabet oranını (Hit Rate) denetleyen ML mimarisi.
             </p>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("🧠 AI Tahminine Giriş Yap", key="entry_ai", type="primary", use_container_width=True):
+        if st.button("🧠 AI Tahmini ile Başlat", key="entry_ai", use_container_width=True):
             st.session_state["app_unlocked"] = True
             st.rerun()
 
-    # Yasal Uyarı Kutusu (Yüksek Kontrastlı & Çok Belirgin Görünüm)
+    # Yasal Uyarı Kutusu (Garantili Bembeyaz & Yüksek Kontrastlı Metin)
     st.markdown("""
-    <div style="background: #141824; border: 2px solid #F59E0B; border-left: 8px solid #F59E0B; border-radius: 12px; padding: 22px; margin: 25px 0 15px 0; box-shadow: 0 4px 20px rgba(245, 158, 11, 0.25);">
-        <h4 style="color: #FBBF24; margin: 0 0 10px 0; font-size: 1.15rem; font-weight: 700; letter-spacing: 0.5px;">
-            ⚖️ ÖNEMLİ YASAL UYARI (SPK & Mevzuat Bilgilendirmesi)
-        </h4>
-        <p style="color: #FFFFFF !important; font-size: 0.95rem; line-height: 1.6; margin: 0; font-weight: 400;">
+    <div class="disclaimer-card">
+        <div style="display: flex; align-items: center; margin-bottom: 12px;">
+            <span style="font-size: 1.4rem; margin-right: 10px;">⚖️</span>
+            <span style="color: #FBBF24 !important; font-size: 1.15rem; font-weight: 800; letter-spacing: 0.5px;">
+                ÖNEMLİ YASAL UYARI (SPK & Mevzuat Bilgilendirmesi)
+            </span>
+        </div>
+        <div style="color: #FFFFFF !important; font-size: 0.98rem; line-height: 1.7; font-weight: 400;">
             Bu platform; niceliksel finans, algoritmik modeller ve makine öğrenmesi algoritmalarını göstermek amacıyla 
-            <b style="color: #FBBF24;">yalnızca eğitim, akademik araştırma ve simülasyon amaçlı</b> geliştirilmiştir.<br><br>
+            <span style="color: #FBBF24 !important; font-weight: 700; background: rgba(251, 191, 36, 0.2); padding: 2px 7px; border-radius: 4px;">yalnızca eğitim, akademik araştırma ve simülasyon amaçlı</span> geliştirilmiştir.<br><br>
             Platformda üretilen alım-satım sinyalleri, teknik indikatörler ve yapay zeka model tahminleri 
-            <b style="color: #F87171;">kesinlikle yatırım tavsiyesi (YTD) veya portföy yöneticiliği kapsamında değildir.</b> 
+            <span style="color: #FB7185 !important; font-weight: 700; background: rgba(251, 113, 133, 0.2); padding: 2px 7px; border-radius: 4px;">kesinlikle yatırım tavsiyesi (YTD) veya portföy yöneticiliği kapsamında değildir.</span> 
             Finansal piyasalarda işlem yapmak sermaye kaybı riski barındırır. 
             Aşağıdaki butona tıklayarak veya modüllere giriş yaparak kullanım koşullarını kabul etmiş sayılırsınız.
-        </p>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
-
     # Doğrudan Ana Giriş Butonu
-    if st.button("🚀 TÜM TERMİNALİ BAŞLAT (TEK TIKLA GİRİŞ)", type="primary", use_container_width=True):
+    if st.button("🚀 TÜM TERMİNALİ BAŞLAT (TEK TIKLA GİRİŞ)", key="entry_main", type="primary", use_container_width=True):
         st.session_state["app_unlocked"] = True
         st.rerun()
 
